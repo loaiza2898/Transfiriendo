@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  app:
+    build: . 
+    container_name: appservice
+    ports:
+      - "3000:3000" 
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb+srv://root:f3vTpUZ8kaSGWZan@transfiriendo.nlyyq.mongodb.net/transfiriendo
+      - SQL_SERVER=localhost 
+      - SQL_USER=sa
+      - SQL_PASSWORD=123456
+      - SQL_DATABASE=TransaccionesDB
+    depends_on:
+      - mongo
+      - sqlserver
+    networks:
+      - app-network
+
+  
+  mongo:
+    image: mongo:5.0  
+    container_name: mongo
+    ports:
+      - "27017:27017" 
+    environment:
+      - MONGO_INITDB_DATABASE=transactionsdb
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+ 
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    container_name: sqlserver
+    ports:
+      - "1433:1433"  
+    environment:
+      - ACCEPT_EULA=Y  
+      - SA_PASSWORD=123456  
+      - MSSQL_PID=Express  
+    volumes:
+      - sqlserver-data:/var/opt/mssql 
+    networks:
+      - app-network
+
+
+volumes:
+  mongo-data:
+  sqlserver-data:
+
+
+networks:
+  app-network:
+    driver: bridge
