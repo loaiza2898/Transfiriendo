@@ -87,6 +87,24 @@ SQL_PASSWORD=123456
 SQL_DATABASE=TransaccionesDB
 
 ```
+adicional a esto, dejare la configuracion del archivo tsconfig.json de ser necesaria 
 
+```.env
 
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true, 
+    "emitDecoratorMetadata": true,  
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+
+```
 
